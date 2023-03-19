@@ -1,0 +1,58 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+    
+	<table style="width:100%;border-collapse:collapse;border:0px;margin:0px;height:100px;">
+		<tr>
+			<h:panelGroup rendered="#{configBean.config.skinAnimatedTop=='F'?'true':'false'}">
+				<td valign="top" height="100" width="100%">			
+					<h:graphicImage  width="100%" height="100" style="margin-top:-3px;"
+						value="/resources/images/skin/#{configBean.config.skinBackground}/topo_lef.png"/>
+					
+					<div style="margin-top:-125px;width:300px;" align="center" >
+						<h:graphicImage style="margin-top:30px;margin-left:20px;"
+							height="65"/>
+																		
+						<h:panelGrid cellpadding="0" cellspacing="0" 
+							style="margin-top:-3px;margin-left:20px;" 
+							rendered="#{configBean.config.skinLogo == 'T'}">
+
+							<h:outputText		
+								value="#{configBean.config.skinTextLogo}"
+								style="font-family: verdana, arial, sans-serif;
+								font-size: 14px; font-weight:bold;
+								color:##{configBean.config.skinColorTextLogo};"/>
+						</h:panelGrid>	
+					</div>	
+				</td>		
+					
+			</h:panelGroup>
+			
+			<h:panelGroup rendered="#{configBean.config.skinAnimatedTop== 'T' ? 'true' : 'false'}">
+				<td valign="top" height="100"></td>
+			</h:panelGroup>								
+			
+			<h:panelGroup id="id_html5" 
+				rendered="#{configBean.config.skinAnimatedTop=='T'?'true':'false'}"
+				style="width:100%;position:absolute;">	
+			
+				<center>		
+					<ui:include src="/resources/animatedHtmls/#{configBean.config.skinAnimatedHtml}"/>	
+				</center>
+			</h:panelGroup>				
+		</tr>		
+
+		<tr>
+			<h:panelGroup>
+				<td></td>			
+				<td>
+					<!-- Aqui teremos outras renderizacoes. 
+						  Serah visto oportunamente... -->
+				</td>
+			</h:panelGroup>			
+		</tr>				
+
+	</table>		
+</ui:fragment>
