@@ -2,9 +2,11 @@ package br.com.teste.infra.view.bean;
 
 import java.io.Serializable;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
+import br.com.teste.infra.view.dao.TarefaDAO;
 import br.com.teste.infra.view.vo.Config;
 
 @Named
@@ -34,7 +36,6 @@ private static final long serialVersionUID = -6663659948453061860L;
 
 		//Setando os diversos parametros de skin para o aplicativo.
 		config.setSkinAnimatedTop("F"); //..........................Topo default "nao-animado".
-		config.setSkinBackground("vetruvian"); //...................Skin default - vetruvian.
 		config.setSkinLogo("T"); //.................................Topo - logotipo da empresa.
 		config.setSkinTextLogo("TESTE | TODOLIST"); //...............Texto abaixo do logotipo.
 		config.setSkinColorTextLogo("d3d3d3"); //...................A cor do texto do logotipo;	
@@ -43,14 +44,9 @@ private static final long serialVersionUID = -6663659948453061860L;
 		//Isto eh o que serah escrito no rodapeh da pagina.
 		config.setSkinFooter("TESTE | TODOLIST");
 				
-		//O tema default eh o aristo.
 		skinTheme="aristo";	
 		config.setSkinTheme("primefaces-" + skinTheme); 
 			
-		//logs
-		System.out.println("Rodando o tema: " + config.getSkinTheme());
-		System.out.println("Rodando o skin: " + config.getSkinBackground());
-		System.out.println("Rodando o menu: " + config.getMenuType());				
 	}
 	
 	/*---------
@@ -63,6 +59,9 @@ private static final long serialVersionUID = -6663659948453061860L;
 
 		return config;
 	}
+	
+	@EJB
+	private TarefaDAO livroDao;
 	
 	public void setConfig(Config config) {
 		this.config = config;

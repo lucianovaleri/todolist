@@ -6,11 +6,80 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-	  	  		
+	
+	<script>
+	function showModal() {
+	    var main = $('main');
+	    main.attr('aria-hidden', true).css('pointer-events', 'none');
+	    main.find(':focusable').each(function(i) {
+	        var tabindex = String($(this).attr('tabindex') || 0);
+	        $(this).data('tabindex', tabindex).attr('tabindex', '-1');
+	    });
+	}
+
+	/**
+	 * Hide the modal dialog and reinstates the <main> keyboard/mouse and screen reader accessibility.
+	 */
+	function hideModal() {
+	    var main = $('main');
+	    main.removeAttr('aria-hidden').css('pointer-events', '');
+	    main.find(':focusable').each(function(i) {
+	        var tabindex = $(this).data('tabindex') || 0;
+	        $(this).attr('tabindex', tabindex).removeData('tabindex');
+	    });
+	}
+	</script>
+	
     <ui:define name="content">
     
+    <h:head>
+		<title>Lista de Tarefas</title>
+	</h:head>
+	
+    <h:form id="tarefaForm">
+    	<h:dataTable value="{#tarefaBean.tarefas}" var="tar" >
+    		<h:column>
+    			<f:facet name="header">Codigo</f:facet>
+    			#{tar.codTarefa}
+    		</h:column>
+    		<h:column>
+    			<f:facet name="header">Descrição</f:facet>
+    			#{tar.descTarefa}
+    		</h:column>
+    		<h:column>
+    			<f:facet name="header">Responsável</f:facet>
+    			#{tar.responsável}
+    		</h:column>
+    		<h:column>
+    			<f:facet name="header">Data de Entrega</f:facet>
+    			#{tar.dataEntrega}
+    		</h:column>
+    		<h:column rendered="#{tar.entregue} == true">
+    			<f:facet name="header">Entregue</f:facet>
+    			<h:outputLabel value="SIM"></h:outputLabel>
+    		</h:column>
+    		<h:column rendered="#{tar.entregue} == false">
+    			<f:facet name="header">Entregue</f:facet>
+    			<h:outputLabel value="NÃO"></h:outputLabel>
+    		</h:column>
+    	</h:dataTable>
+    
     <h:form>
-    	<br/><h:commandButton value="ShowCase" action="/pages/showcase/homeShowCase?faces-redirect=true"/>
+    	 <p:commandLink update=":tarefaForm:display" oncomplete="PF('dlg').show()"/>
+
+				<p:dialog modal="true" widgetVar="dlg" onShow="showModal();" onHide="hideModal();">
+					<h:panelGroup id="display" columns="2">
+						<f:facet name="header">
+						<p:outputLabel>CADASTRAR NOVA TAREFA</p:outputLabel>
+						</f:facet>
+						<h:outputText value="Descricao da Tarefa:" />
+						<h:inputText  value="#{tarefaBean.selectedTarefa.year}" />
+						<h:outputText value="Descricao da Tarefa:" />
+						<h:inputText  value="#{tarefaBean.selectedTarefa.year}" />
+						<h:outputText value="Descricao da Tarefa:" />
+						<h:inputText  value="#{tarefaBean.selectedTarefa.year}" />
+        			</h:panelGroup>
+				</p:dialog>
     </h:form>
     	
 	</ui:define>
